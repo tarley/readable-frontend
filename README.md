@@ -12,6 +12,9 @@ Esse repositório inclui somente o código do frontend com os frameworks reactst
 	- `npm install`
 	- `npm start`
 
+
+
+
 ## Available Scripts
 
 In the project directory, you can run:

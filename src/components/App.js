@@ -20,12 +20,18 @@ import { Container,
          DropdownMenu,
          DropdownItem} from 'reactstrap';
 
+import {connect} from 'react-redux';
+
 import './App.css';
 
 import Menu from './Menu';
+
+import {getAllPosts} from '../actions';
+
 import * as CategoryAPI from '../utils/CategoryAPI';
 import * as PostAPI from '../utils/PostAPI';
-import {dateFormat} from '../utils/Helpers'
+import {dateFormat} from '../utils/Helpers';
+
 
 
 class App extends Component {
@@ -46,13 +52,22 @@ class App extends Component {
 
    componentDidMount() {
       CategoryAPI.getAll().then(categories => this.setState({categories}));
+      
+      this.props.getAllPosts();
+
+      /*
       PostAPI.getAll().then(posts => this.setState({
          posts,
          sortPosts: this.sortByVoteScore
       }));
+      */
+
    }
 
    render() {
+      console.log(this.props);
+      const {posts} = this.props;
+
       return (
          <Container>
             <Row>
@@ -89,7 +104,7 @@ class App extends Component {
             <Row>
                <Col xs="12">
                      <Row>
-                     {this.state.posts.sort(this.state.sortPosts).map(post => (
+                     {posts && posts.sort(this.state.sortPosts).map(post => (
                         
                            <Col xs='4' key={post.id} className='col-card'>
                               <Card body className='card-post'>
@@ -116,4 +131,16 @@ class App extends Component {
    }
 }
 
-export default App;
+function mapStateToProps({posts}) {
+   return {
+      posts: posts.values
+   }
+}
+
+function mapDispatchToProps(dispatch) {
+   return {
+      getAllPosts: () => dispatch(getAllPosts())
+   }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
