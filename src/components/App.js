@@ -26,7 +26,8 @@ import './App.css';
 
 import Menu from './Menu';
 
-import {getAllPosts} from '../actions';
+import { getAllPosts,
+         getPosts} from '../actions';
 
 import * as CategoryAPI from '../utils/CategoryAPI';
 import * as PostAPI from '../utils/PostAPI';
@@ -49,6 +50,11 @@ class App extends Component {
             this.sortByCreatedDate : this.sortByVoteScore
       });
    
+   selectCategory = (event) => {
+      const selectedItem = event.currentTarget.textContent;
+
+      selectedItem === 'All' ? this.props.getAllPosts() : this.props.getPosts(selectedItem);
+   }
 
    componentDidMount() {
       CategoryAPI.getAll().then(categories => this.setState({categories}));
@@ -85,8 +91,10 @@ class App extends Component {
                            <UncontrolledDropdown nav inNavbar>
                               <DropdownToggle nav caret>Categories</DropdownToggle>
                               <DropdownMenu right>
-                                 <DropdownItem onClick={this.selectOrder}>Vote Score</DropdownItem>
-                                 <DropdownItem onClick={this.selectOrder}>Creation Date</DropdownItem>
+                                 <DropdownItem onClick={this.selectCategory}>All</DropdownItem>
+                                 {this.state.categories.map(category => (
+                                    <DropdownItem onClick={this.selectCategory} key={category.name}>{category.name}</DropdownItem>
+                                 ))}
                               </DropdownMenu>
                            </UncontrolledDropdown>
                            <UncontrolledDropdown nav inNavbar>
@@ -139,7 +147,8 @@ function mapStateToProps({posts}) {
 
 function mapDispatchToProps(dispatch) {
    return {
-      getAllPosts: () => dispatch(getAllPosts())
+      getAllPosts: () => dispatch(getAllPosts()),
+      getPosts: (category) => dispatch(getPosts(category))
    }
 }
 

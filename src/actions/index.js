@@ -11,3 +11,7 @@ export const setAllPosts = (posts) => ({
 export const getAllPosts = () => (dispatch) => (
 	PostAPI.getAll().then(posts => dispatch(setAllPosts(posts)))
 );
+
+export const getPosts = (category) => (dispatch) => (
+	PostAPI.get(category).then(posts => dispatch(setAllPosts(posts)))
+);
