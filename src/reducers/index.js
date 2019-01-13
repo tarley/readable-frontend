@@ -1,7 +1,18 @@
 import {combineReducers} from 'redux';
 import {SET_ALL_POSTS,
+		SET_ALL_CATEGORIES,
 		RECEIVE_ALL} from '../actions'
 
+function categories(state = {}, action) {
+	switch(action.type) {
+		case SET_ALL_CATEGORIES:
+			return {
+				values: action.categories
+			}
+		default:
+			return state;
+	}
+}
 
 function posts(state = {}, action) {
 	switch(action.type) {
@@ -26,4 +37,4 @@ function comments(state = {}, action) {
 }
 
 
-export default combineReducers({posts, comments});
+export default combineReducers({categories, posts, comments});

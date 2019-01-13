@@ -26,7 +26,8 @@ import './App.css';
 
 import Menu from './Menu';
 
-import { getAllPosts,
+import { getAllCategories,
+         getAllPosts,
          getPosts} from '../actions';
 
 import * as CategoryAPI from '../utils/CategoryAPI';
@@ -57,8 +58,8 @@ class App extends Component {
    }
 
    componentDidMount() {
-      CategoryAPI.getAll().then(categories => this.setState({categories}));
-      
+      //CategoryAPI.getAll().then(categories => this.setState({categories}));
+      this.props.getAllCategories();
       this.props.getAllPosts();
 
       /*
@@ -72,7 +73,7 @@ class App extends Component {
 
    render() {
       console.log(this.props);
-      const {posts} = this.props;
+      const {categories, posts} = this.props;
 
       return (
          <Container>
@@ -92,7 +93,7 @@ class App extends Component {
                               <DropdownToggle nav caret>Categories</DropdownToggle>
                               <DropdownMenu right>
                                  <DropdownItem onClick={this.selectCategory}>All</DropdownItem>
-                                 {this.state.categories.map(category => (
+                                 {categories && categories.map(category => (
                                     <DropdownItem onClick={this.selectCategory} key={category.name}>{category.name}</DropdownItem>
                                  ))}
                               </DropdownMenu>
@@ -139,14 +140,16 @@ class App extends Component {
    }
 }
 
-function mapStateToProps({posts}) {
+function mapStateToProps({categories, posts}) {
    return {
+      categories: categories.values,
       posts: posts.values
    }
 }
 
 function mapDispatchToProps(dispatch) {
    return {
+      getAllCategories : () => dispatch(getAllCategories()),
       getAllPosts: () => dispatch(getAllPosts()),
       getPosts: (category) => dispatch(getPosts(category))
    }
