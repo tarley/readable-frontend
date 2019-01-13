@@ -3,8 +3,11 @@ import * as PostAPI from '../utils/PostAPI';
 
 export const SET_ALL_CATEGORIES = 'SET_ALL_CATEGORIES';
 export const SET_ALL_POSTS = 'SET_ALL_POSTS';
-
+export const SORT_POSTS = 'SORT_POSTS';
 export const RECEIVE_ALL = 'RECEIVE_ALL';
+
+
+const DEFAULT_POST_SORT = (a, b) => b.voteScore - a.voteScore;
 
 export const setAllCategories = (categories) => ({
 	type: SET_ALL_CATEGORIES,
@@ -17,7 +20,7 @@ export const getAllCategories = () => (dispatch) => (
 
 export const setAllPosts = (posts) => ({
 	type: SET_ALL_POSTS,
-	posts
+	posts: posts.sort(DEFAULT_POST_SORT)
 });
 
 export const getAllPosts = () => (dispatch) => (
@@ -27,3 +30,17 @@ export const getAllPosts = () => (dispatch) => (
 export const getPosts = (category) => (dispatch) => (
 	PostAPI.get(category).then(posts => dispatch(setAllPosts(posts)))
 );
+
+export function sortPostsByVoteScore() {
+	return {
+		type: SORT_POSTS,
+		method: DEFAULT_POST_SORT
+	}
+}
+
+export function sortPostsByCreateDate() {
+	return {
+		type: SORT_POSTS,
+		method: (a, b) => b.timestamp - a.timestamp
+	}
+}
