@@ -1,4 +1,16 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Este projeto foi criando com o [Create React App](https://github.com/facebook/create-react-app).
+
+# Readable Frontend
+
+Este é o projeto web de conteúdo e comentários para o projeto de avaliação final do curso Redux da Udacity. Os usuários poderão postar conteúdo em categorias predefinidas, comentar suas postagens e postagens de outros usuários e votar em postagens e comentários. Os usuários também poderão editar e excluir postagens e comentários.
+
+Esse repositório inclui somente o código do frontend com os frameworks reactstrap, react-router-dom e react-redux.
+
+## Comece a desenvolver
+
+* Para iniciar o desenvolvimento, neste diretório, instale as dependências e inicie o servidor:
+	- `npm install`
+	- `npm start`
 
 ## Available Scripts
 
