@@ -16,7 +16,9 @@ import './Menu.css';
 
 import { getAllCategories,
 			sortPostsByVoteScore,
-			sortPostsByCreateDate} from '../actions';
+			sortPostsByCreateDate,
+			getAllPosts,
+			getPosts} from '../actions';
 
 class Menu extends Component {
    
@@ -82,7 +84,9 @@ function mapDispatchToProps(dispatch) {
    return {
       getAllCategories : () => dispatch(getAllCategories()),
       sortPostsByVoteScore: () => dispatch(sortPostsByVoteScore()),
-      sortPostsByCreateDate: () => dispatch(sortPostsByCreateDate())
+      sortPostsByCreateDate: () => dispatch(sortPostsByCreateDate()),
+      getAllPosts: () => dispatch(getAllPosts()),
+      getPosts: (category) => dispatch(getPosts(category))
    }
 }
 
