@@ -2,13 +2,28 @@ import React, { Component } from 'react';
 import { Container, 
          Row, 
          Col} from 'reactstrap';
+import {withRouter} from 'react-router';
+import {Route} from 'react-router-dom';
 
 import './App.css';
 
 import Menu from './Menu';
 import ListPost from './ListPost';
+import FormPost from './FormPost';
 
 class App extends Component {
+   state = {
+      selectedPostId: null
+   }
+
+   onSelectPost = (selectedPostId) => {
+      this.setState({
+         selectedPostId
+      });
+
+      this.props.history.push('/post');
+   }
+
    render() {
       return (
          <Container>
@@ -19,7 +34,13 @@ class App extends Component {
             </Row>
             <Row>
                <Col xs="12">
-                  <ListPost />
+                  <Route exact path='/' render={() => ( 
+                     <ListPost onSelect={this.onSelectPost}/>
+                  )}/>
+
+                  <Route path='/post' render={() => (
+                     <FormPost postId={this.state.selectedPostId} /> 
+                  )} />
                </Col>
             </Row>
          </Container>
@@ -27,4 +48,4 @@ class App extends Component {
    }
 }
 
-export default App;
+export default withRouter(App);

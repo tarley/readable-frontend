@@ -3,6 +3,9 @@ function formatStr(number, digits=2) {
 }
 
 export const dateFormat = (timestamp) => {
+	if(!timestamp)
+		return "";
+
 	//timestamp = new Date().getTime();
 	const date = new Date(timestamp);
 	
@@ -16,4 +19,8 @@ export const dateFormat = (timestamp) => {
 	}
 
 	return `${dateValues.day}/${dateValues.month}/${dateValues.year} ${dateValues.hour}:${dateValues.minute}:${dateValues.second}`;	
+}
+
+export function isNullOrEmpty(value) {
+	return !value || value.trim().length === 0;
 }

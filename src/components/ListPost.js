@@ -24,7 +24,7 @@ class ListPost extends Component {
 
    render() {
       console.log(this.props);
-      const {posts} = this.props;
+      const {posts, onSelect} = this.props;
 
       return (
          <Row>
@@ -33,11 +33,10 @@ class ListPost extends Component {
                      <Card body className='card-post'>
                         <CardHeader>{post.title}</CardHeader>
                         <CardBody>
-                           <CardText>{post.body}</CardText>
                            <CardText><small className="text-muted">{`Author: ${post.author}`}</small></CardText>
                            <CardText><small className="text-muted">{`Category: ${post.category}`}</small></CardText>
                            <CardText><small className="text-muted">{`Created at: ${dateFormat(post.timestamp)}`}</small></CardText>
-                           <Button color="primary">Details</Button>
+                           <Button outline color="primary" onClick={() => onSelect(post.id)}>View Text</Button>
                         </CardBody>
                         <CardFooter>Score: <Badge pill color="success">{post.voteScore}</Badge>
                         </CardFooter>

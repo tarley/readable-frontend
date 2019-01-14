@@ -9,7 +9,6 @@ import { Navbar,
          DropdownToggle,
          DropdownMenu,
          DropdownItem} from 'reactstrap';
-
 import {connect} from 'react-redux';
 
 import './Menu.css';
@@ -29,6 +28,7 @@ class Menu extends Component {
    
    selectCategory = (event) => {
       const selectedItem = event.currentTarget.textContent;
+      console.log(event);
 
       selectedItem === 'All' ? this.props.getAllPosts() : this.props.getPosts(selectedItem);
    }
@@ -49,14 +49,14 @@ class Menu extends Component {
             <Collapse navbar>
                <Nav className="ml-auto" navbar>
                   <NavItem>
-                     <NavLink href="/components/">Add Post</NavLink>
+                  	<NavLink href="/post">Add Post</NavLink>
                   </NavItem>
                   <UncontrolledDropdown nav inNavbar>
                      <DropdownToggle nav caret>Categories</DropdownToggle>
                      <DropdownMenu right>
                         <DropdownItem onClick={this.selectCategory}>All</DropdownItem>
                         {categories && categories.map(category => (
-                           <DropdownItem onClick={this.selectCategory} key={category.name}>{category.name}</DropdownItem>
+                           <DropdownItem onClick={this.selectCategory} href={category.path} key={category.name}>{category.name}</DropdownItem>
                         ))}
                      </DropdownMenu>
                   </UncontrolledDropdown>
