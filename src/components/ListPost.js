@@ -13,17 +13,21 @@ import {connect} from 'react-redux';
 
 import './ListPost.css';
 
-import {getAllPosts} from '../actions';
+import {getAllPosts, getPosts} from '../actions';
 
 import {dateFormat} from '../utils/Helpers';
 
 class ListPost extends Component {
    componentDidMount() {
-      this.props.getAllPosts();
+      const {category} = this.props;
+
+      if(!category)
+         this.props.getAllPosts();
+      else
+         this.props.getPosts(category);
    }
 
    render() {
-      console.log(this.props);
       const {posts, onSelect} = this.props;
 
       return (
@@ -57,7 +61,8 @@ function mapStateToProps({posts}) {
 
 function mapDispatchToProps(dispatch) {
    return {
-      getAllPosts: () => dispatch(getAllPosts())
+      getAllPosts: () => dispatch(getAllPosts()),
+      getPosts: (category) => dispatch(getPosts(category))
    }
 }
 

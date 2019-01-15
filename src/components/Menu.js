@@ -15,35 +15,22 @@ import './Menu.css';
 
 import { getAllCategories,
 			sortPostsByVoteScore,
-			sortPostsByCreateDate,
-			getAllPosts,
-			getPosts} from '../actions';
+			sortPostsByCreateDate} from '../actions';
 
 class Menu extends Component {
-   
-   selectOrder = (event) => {
-		event.currentTarget.textContent === 'Creation Date' ? 
-			this.props.sortPostsByCreateDate() : this.props.sortPostsByVoteScore()
-   }
-   
-   selectCategory = (event) => {
-      const selectedItem = event.currentTarget.textContent;
-      console.log(event);
-
-      selectedItem === 'All' ? this.props.getAllPosts() : this.props.getPosts(selectedItem);
-   }
-
    componentDidMount() {
       this.props.getAllCategories();
    }
-
    render() {
-      const {categories} = this.props;
+      const categoryMenuItens = [
+      	{name: 'All', path: ''},
+      	...this.props.categories
+      ];
 
       return (
          <Navbar color="light" light expand="md">
             <NavbarBrand href="/">
-               <img src="iconfinder_woman-reading-bg_3430603.svg" alt='Logo' className="img-logo"></img>
+               <img src="/iconfinder_woman-reading-bg_3430603.svg" alt='Logo' className="img-logo"></img>
                Readable
             </NavbarBrand>
             <Collapse navbar>
@@ -54,17 +41,18 @@ class Menu extends Component {
                   <UncontrolledDropdown nav inNavbar>
                      <DropdownToggle nav caret>Categories</DropdownToggle>
                      <DropdownMenu right>
-                        <DropdownItem onClick={this.selectCategory}>All</DropdownItem>
-                        {categories && categories.map(category => (
-                           <DropdownItem onClick={this.selectCategory} href={category.path} key={category.name}>{category.name}</DropdownItem>
-                        ))}
+                     {
+                     	categoryMenuItens.map(item => (
+                     		<DropdownItem key={item.path} href={`/${item.path}`}>{item.name}</DropdownItem>
+                  		))
+                     }
                      </DropdownMenu>
                   </UncontrolledDropdown>
                   <UncontrolledDropdown nav inNavbar>
                      <DropdownToggle nav caret>Sort Posts by</DropdownToggle>
                      <DropdownMenu right>
-                        <DropdownItem onClick={this.selectOrder}>Vote Score</DropdownItem>
-                        <DropdownItem onClick={this.selectOrder}>Creation Date</DropdownItem>
+                     	<DropdownItem onClick={e => this.props.sortPostsByVoteScore()}>Vote Score</DropdownItem>
+                     	<DropdownItem onClick={e => this.props.sortPostsByCreateDate()}>Creation Date</DropdownItem>
                      </DropdownMenu>
                   </UncontrolledDropdown>
                </Nav>
@@ -83,10 +71,8 @@ function mapStateToProps({categories}) {
 function mapDispatchToProps(dispatch) {
    return {
       getAllCategories : () => dispatch(getAllCategories()),
-      sortPostsByVoteScore: () => dispatch(sortPostsByVoteScore()),
-      sortPostsByCreateDate: () => dispatch(sortPostsByCreateDate()),
-      getAllPosts: () => dispatch(getAllPosts()),
-      getPosts: (category) => dispatch(getPosts(category))
+      sortPostsByVoteScore : () => dispatch(sortPostsByVoteScore()),
+      sortPostsByCreateDate: () => dispatch(sortPostsByCreateDate())
    }
 }
 

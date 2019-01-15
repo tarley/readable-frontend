@@ -34,11 +34,11 @@ class App extends Component {
             </Row>
             <Row>
                <Col xs="12">
-                  <Route exact path='/' render={() => ( 
-                     <ListPost onSelect={this.onSelectPost}/>
+                  <Route path='/:category?' render={({match}) => (
+                     <ListPost category={match.params.category}/>
                   )}/>
 
-                  <Route path='/post' render={() => (
+                  <Route exact path='/post' render={() => (
                      <FormPost postId={this.state.selectedPostId} /> 
                   )} />
                </Col>
