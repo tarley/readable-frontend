@@ -10,6 +10,7 @@ import { Row,
          Button} from 'reactstrap';
 
 import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
 
 import './ListPost.css';
 
@@ -28,7 +29,7 @@ class ListPost extends Component {
    }
 
    render() {
-      const {posts, onSelect} = this.props;
+      const {posts} = this.props;
 
       return (
          <Row>
@@ -40,7 +41,9 @@ class ListPost extends Component {
                            <CardText><small className="text-muted">{`Author: ${post.author}`}</small></CardText>
                            <CardText><small className="text-muted">{`Category: ${post.category}`}</small></CardText>
                            <CardText><small className="text-muted">{`Created at: ${dateFormat(post.timestamp)}`}</small></CardText>
-                           <Button outline color="primary" onClick={() => onSelect(post.id)}>View Text</Button>
+                           <Link to={`/${post.category}/${post.id}`}>
+                              <Button outline color="primary">Edit Post</Button>
+                           </Link>
                         </CardBody>
                         <CardFooter>Score: <Badge pill color="success">{post.voteScore}</Badge>
                         </CardFooter>

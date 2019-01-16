@@ -36,7 +36,7 @@ class Menu extends Component {
             <Collapse navbar>
                <Nav className="ml-auto" navbar>
                   <NavItem>
-                  	<NavLink href="/post">Add Post</NavLink>
+                  	<NavLink href="/posts/new">Add Post</NavLink>
                   </NavItem>
                   <UncontrolledDropdown nav inNavbar>
                      <DropdownToggle nav caret>Categories</DropdownToggle>
@@ -64,7 +64,7 @@ class Menu extends Component {
 
 function mapStateToProps({categories}) {
    return {
-      categories: categories.values
+      categories: Object.values(categories)
    }
 }
 

@@ -1,7 +1,8 @@
+import * as UUID from 'uuid';
 import {api, headers} from './Config.js';
 
 
-export const get = (category) => 
+export const getByCategory = (category) => 
 	fetch(`${api}/${category}/posts`, headers)
 		.then(data => data.json());
 
@@ -9,12 +10,22 @@ export const getAll = () =>
 	fetch(`${api}/posts`, headers)
 		.then(data => data.json());
 
-export const create = (post) =>
-	fetch(`${api}/posts`, {
+export const create = (title, body, author, category) => {
+	const request = {
+		id: UUID.v1(),
+		timestamp: Date.now(),
+		title,
+		body,
+		author,
+		category
+	}
+
+	return fetch(`${api}/posts`, {
 		method: 'POST',
 		...headers,
-		body: JSON.stringify(post)
+		body: JSON.stringify(request)
 	}).then(data => data.json());
+}
 
 export const getById = (id) =>
 	fetch(`${api}/posts/${id}`, headers)
@@ -27,11 +38,11 @@ export const vote = (id, option) =>
 		body: JSON.stringify({option})
 	}).then(data => data.json());
 
-export const update = (post) =>
-	fetch(`${api}/posts/${post.id}`, {
+export const update = (id, newTitle, newBody) =>
+	fetch(`${api}/posts/${id}`, {
 		method: 'PUT',
 		...headers,
-		body: JSON.stringify(post)
+		body: JSON.stringify({title: newTitle, body: newBody})
 	}).then(data => data.json());
 
 
