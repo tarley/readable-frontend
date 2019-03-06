@@ -1,12 +1,12 @@
 import React from 'react';
-import {	Form,
-			FormGroup,
-			Label,
-			Input,
-			FormFeedback,
-			Row,
-			Col,
-			Button} from 'reactstrap';
+import {Form,
+		FormGroup,
+		Label,
+		Input,
+		FormFeedback,
+		Row,
+		Col,
+		Button} from 'reactstrap';
 import {withRouter} from 'react-router';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
@@ -25,10 +25,6 @@ class NewPost extends FormPost {
     	const {title, body, author, category} = this.state;
 
 		const action = await this.props.createPost(title, body, author, category);	
-
-		console.group('NewPost createPost');
-		console.log(action);
-		console.groupEnd();
 
 		this.props.history.push(`/${category}/${action.post.id}`);
 	}

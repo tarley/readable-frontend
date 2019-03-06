@@ -30,7 +30,7 @@ class Menu extends Component {
       return (
          <Navbar color="light" light expand="md">
             <NavbarBrand href="/">
-               <img src="/iconfinder_woman-reading-bg_3430603.svg" alt='Logo' className="img-logo"></img>
+               <img src="/iconfinder_woman-reading-bg_3430603.svg" alt='Logo' className="mr-3 img-logo"></img>
                Readable
             </NavbarBrand>
             <Collapse navbar>

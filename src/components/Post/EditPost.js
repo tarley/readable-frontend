@@ -1,5 +1,7 @@
 import React from 'react';
-import {Row,
+import PropTypes from 'prop-types';
+import {Container,
+		Row,
 		Col,
 		Form,
 		FormGroup,
@@ -11,27 +13,24 @@ import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 
 import FormPost from './FormPost';
-import VotePost from './VotePost';
-import NotFound from '../NotFound';
+import VoteScore from '../Common/VoteScore';
+import NotFound from '../Common/NotFound';
 
 import {getPostById,
 		updatePost,
-		deletePost} from '../../actions';
+		deletePost,
+		upVotePost,
+		downVotePost,
+		getAllComments} from '../../actions';
+
 import {dateFormat} from '../../utils/Helpers';
+import ListComment from '../Comment/ListComment';
 
 class EditPost extends FormPost {
 	async componentDidMount() {
-		console.group("EditPost componentDidMount");
-		console.log(this.props.postId);
+		await this.props.getPostById();
+		await this.props.getAllComments();
 
-		if(!this.props.selectedItem) {
-			console.log('Find post by ID...');
-			await this.props.getPostById(this.props.postId);
-			console.log('Select post');
-		}
-		
-		console.groupEnd();
-		
 		this.setState({
 			...this.props.selectedItem
 		});
@@ -43,26 +42,22 @@ class EditPost extends FormPost {
     		return;
 
     	const {title, body} = this.state;
-		this.props.updatePost(this.props.postId, title, body);
+		this.props.updatePost(title, body);
 
 		super.showMessage('Post updated successfully!');
 	}
 	delete() {
-		this.props.deletePost(this.props.postId);
-		super.showMessage('Post updated successfully!');
-
+		this.props.deletePost();
 		this.props.history.push('/');
 	}
 	render() {
 		if(!this.props.selectedItem)
 			return(<NotFound />);
 
-		const {id, author, voteScore, timestamp, category} = this.props.selectedItem;
-		console.group('EditPost render');
-		console.log(this.props);
-		console.groupEnd();
-
+		const {id, author, voteScore, timestamp, category, comments} = this.props.selectedItem;
+		
 		return (
+			<Container>
 				<Form onSubmit={(e) => this.updatePost(e) }>
 					{super.componentAppMensage()}
 
@@ -108,39 +103,67 @@ class EditPost extends FormPost {
 						</Col>
 					</FormGroup>
 					<Row>
-			       		<Col md={{ size: 'auto', offset: 10 }}> 
+						{
+							id && (<Label sm={6}>{`Comment count: ${comments.length}`}</Label>)
+						}  
+						<Col sm={6}> 
 			       			{ 
-			       				id && (<VotePost id={id} voteScore={voteScore} />)
-			       			}
+								id && ( <VoteScore
+											id={id} 
+											score={voteScore} 
+											upVote={this.props.upVotePost} 
+											downVote={this.props.downVotePost}
+										/>)
+							}							 
 			       		</Col>
 		     		</Row>
 					<Row>
 						<Col md={{ size: 'auto', offset: 2 }}>
 							<Button outline color="primary">Submit</Button>{' '}
 							<Button outline onClick={e => this.delete()}>Delete</Button>{' '}
+							<Link to={`/${category}/${id}/comments/new`}><Button outline>Add Comment</Button></Link>
 							<Link to="/"><Button outline>Back</Button></Link>
 						</Col>
 					</Row>
 				</Form>
+				<Row>
+					<Col>
+						{
+							id && (
+								<ListComment
+									category={category}
+									postId={id} 
+									comments={comments}
+								/>)
+						}	
+					</Col>
+				</Row>
+			</Container>
 		);
 	}
 }
 
-function mapStateToProps({posts}, props) {
-	console.group("EditPost mapStateToProps");
-	console.log(posts);
-	console.groupEnd();
-	
+EditPost.propTypes = {
+	postId: PropTypes.string.isRequired
+ }
+
+function mapStateToProps({posts, comments}, props) {
 	return {
-		selectedItem: posts[props.postId]
+		selectedItem: {
+			 ...posts[props.postId],
+			 comments: Object.values(comments)
+		}
 	}
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch, props) {
 	return {
-   		getPostById: (id) => dispatch(getPostById(id)),
-   		updatePost: (id, newTitle, newBody) => dispatch(updatePost(id, newTitle, newBody)),
-   		deletePost: (id) => dispatch(deletePost(id))
+   		getPostById: () => dispatch(getPostById(props.postId)),
+   		updatePost: (newTitle, newBody) => dispatch(updatePost(props.postId, newTitle, newBody)),
+		deletePost: () => dispatch(deletePost(props.postId)),
+		upVotePost: () => dispatch(upVotePost(props.postId)),
+		downVotePost: () => dispatch(downVotePost(props.postId)),
+		getAllComments: () => dispatch(getAllComments(props.postId))
 	};
 }
 

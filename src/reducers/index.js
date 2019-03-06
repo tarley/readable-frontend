@@ -4,7 +4,12 @@ import {RECEIVE_ALL_CATEGORIES,
 		RECEIVE_POST,
 		SORT_POSTS,
 		UPDATE_VOTE_SCORE_POST,
-		REMOVE_POST} from '../actions';
+		REMOVE_POST,
+		RECEIVE_ALL_COMMENTS,
+		RECEIVE_COMMENT,
+		UPDATE_VOTE_SCORE_COMMENT,
+		REMOVE_COMMENT,
+		METHOD_SORT_BY_VOTE_SCORE} from '../actions';
 
 const initialState = {}
 
@@ -32,63 +37,109 @@ const mapPosts = (result, post) => {
 }
 
 function posts(state = initialState, action) {
+	let newState;
+
 	switch(action.type) {
 		case RECEIVE_ALL_POSTS:
-   			const itens = action.posts.reduce(mapPosts, {});
+			newState = action.posts.sort(action.postSortMethod).reduce(mapPosts, {});
 
 			return {
-				...itens
+				...newState
 			}
 		case RECEIVE_POST:
-			console.group("RECEIVE_POST");
-			const newState = {
+			newState = {
 				...state,
 				[action.post.id]: action.post
 			};
-			//console.log(state);
-			console.log(newState);
-			console.groupEnd();
+			
+			newState = Object.values(newState).sort(action.postSortMethod).reduce(mapPosts, {}); 
 
 			return {
 				...newState
 			}
 		case SORT_POSTS:
-			const sortItens = Object.values(state).sort(action.method).reduce(mapPosts, {});
+			newState = Object.values(state).sort(action.postSortMethod).reduce(mapPosts, {});
 
 			return {
-				...sortItens
+				...newState
 			}
 		case UPDATE_VOTE_SCORE_POST:
-			console.group("UPDATE_VOTE_SCORE_POST");
-			const newStateUpdateVote = {
-				...state,
-				[action.id]: {
-					...state[action.id],
-					['voteScore']: action.voteScore
-				}
+			newState = {
+				...state
 			}
-			console.log(state);
-			console.log(newStateUpdateVote);
-			console.groupEnd();
+			newState[action.id].voteScore = action.voteScore;
+
+
+			newState = Object.values(newState).sort(action.postSortMethod).reduce(mapPosts, {});
 
 			return {
-				...newStateUpdateVote
+				...newState
 			}
 		case REMOVE_POST:
-			console.group("REMOVE_POST");
-			console.log(action.res);
-			console.groupEnd();
-			
+			newState = {
+				...state
+			}
+
+			delete newState[action.id];
+
 			return {
-				...state.filter(post => post.id !== action.id)
+				...newState
 			}
 		default:
 			return state;
 	}
 }
 
+const mapComments = (result, comment) => {
+	result[comment.id] = comment;
+	return result;
+}
+
 function comments(state = initialState, action) {
-	return state;
+	let newState;
+
+	switch(action.type) {
+		case RECEIVE_ALL_COMMENTS:
+			newState = action.comments.sort(METHOD_SORT_BY_VOTE_SCORE).reduce(mapComments, {});
+
+			return {
+				...newState
+			}
+		case RECEIVE_COMMENT:
+			newState = {
+				...state,
+				[action.comment.id]: action.comment
+			};
+			
+			newState = Object.values(newState).sort(METHOD_SORT_BY_VOTE_SCORE).reduce(mapComments, {});
+
+			return {
+				...newState
+			}
+		case UPDATE_VOTE_SCORE_COMMENT:
+			newState = {
+				...state
+			}
+
+			newState[action.id].voteScore = action.voteScore;
+
+			
+			newState = Object.values(newState).sort(METHOD_SORT_BY_VOTE_SCORE).reduce(mapComments, {});
+
+			return {
+				...newState
+			}
+		case REMOVE_COMMENT:
+			newState = {
+				...state
+			}
+			delete newState[action.id];
+			return {
+				...newState
+			}
+		default: 
+			return state;
+	}
 }
 
 
