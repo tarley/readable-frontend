@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Row, 
          Col,
          Card,
@@ -64,6 +65,10 @@ class ListPost extends Component {
       );
    }
 }
+
+ListPost.propTypes = {
+	category: PropTypes.string.isRequired
+ }
 
 function mapStateToProps({posts}) {
    return {
