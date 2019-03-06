@@ -4,7 +4,7 @@ Este projeto foi criando com o [Create React App](https://github.com/facebook/cr
 
 Este é o projeto web de conteúdo e comentários para o projeto de avaliação final do curso Redux da Udacity. Os usuários poderão postar conteúdo em categorias predefinidas, comentar suas postagens e postagens de outros usuários e votar em postagens e comentários. Os usuários também poderão editar e excluir postagens e comentários.
 
-Esse repositório inclui somente o código do frontend com os frameworks reactstrap, react-router-dom e react-redux.
+Esse repositório inclui somente o código do frontend com os frameworks reactstrap, react-router-dom, react-redux e react-icon.
 
 ## Comece a desenvolver
 
@@ -12,8 +12,19 @@ Esse repositório inclui somente o código do frontend com os frameworks reactst
 	- `npm install`
 	- `npm start`
 
+## Estrutura do projeto
 
-
+* readable-frontend/src
+	- actions: Eventos do Redux
+	- components: Componentes do React
+		- Comment: Compomentes para o CRUD de comentários.
+		- Common: Componentes comuns para todas as funcionalidades da aplicação.
+		- Post: Componentes para o CRUD de Posts.
+		- App.js: Layout principal da aplicação, possui as rotas e agrupa todos os demais componentes.
+		- Menu.js: Menu principal da aplicação.
+	- reducers: Manipuladores de estado do Redux
+	- utils: métodos utilitários, desde auxiliares para as API's de serviços, como Helpers para formatação de data.
+		- Config.js: `IMPORTANTE:` Alterar a constante "api" apontando para o servidor correto. [http://localhost:3001] 
 
 ## Available Scripts
 
