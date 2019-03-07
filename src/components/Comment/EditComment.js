@@ -44,13 +44,16 @@ class EditComment extends FormComment {
 
 		super.showMessage('Comment updated successfully!');
 	}
-
+	delete() {
+		this.props.deleteComment();
+		this.props.history.push(this.getOriginURL());
+	}
 	getOriginURL() {
 		return `/${this.props.category}/${this.props.postId}`;
 	}
 
 	render() {
-		if(!this.props.selectedItem)
+		if(!this.props.selectedItem.id)
 			return(<NotFound />);
 
 		const {id, voteScore, timestamp} = this.props.selectedItem;
@@ -92,6 +95,7 @@ class EditComment extends FormComment {
 				<Row>
 					<Col md={{size: 'auto', offset: 2}}>
 						<Button outline color="primary">Submit</Button>{' '}
+						<Button outline onClick={e => this.delete()}>Delete</Button>{' '}
 						<Link to={this.getOriginURL()}><Button outline>Back</Button></Link>
 					</Col>
 				</Row>

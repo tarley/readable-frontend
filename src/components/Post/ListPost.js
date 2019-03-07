@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Row, 
          Col,
          Card,
@@ -51,11 +50,15 @@ class ListPost extends Component {
                            </Link>
                         </CardBody>
                         <CardFooter>
-                           <VoteScore 
-                              score={post.voteScore} 
-                              upVote={() => this.props.upVotePost(post.id)} 
-										downVote={() => this.props.downVotePost(post.id)}
-                           />
+                           {
+                              post && (
+                                 <VoteScore 
+                                    score={post.voteScore} 
+                                    upVote={() => this.props.upVotePost(post.id)} 
+                                    downVote={() => this.props.downVotePost(post.id)}
+                                 />
+                              ) 
+                           }
                         </CardFooter>
                      </Card>
                   </Col>
@@ -65,10 +68,6 @@ class ListPost extends Component {
       );
    }
 }
-
-ListPost.propTypes = {
-	category: PropTypes.string.isRequired
- }
 
 function mapStateToProps({posts}) {
    return {

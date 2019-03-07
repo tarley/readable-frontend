@@ -39,11 +39,17 @@ class ListComment extends Component {
                         <th scope="row">{dateFormat(comment.timestamp)}</th>
                         <td>{comment.body}</td>
                         <td>{comment.author}</td>
-                        <td><VoteScore
-											score={comment.voteScore} 
-											upVote={() => this.props.upVoteComment(comment.id)} 
-											downVote={() => this.props.downVoteComment(comment.id)}
-										/></td>
+                        <td>
+                           {
+                              comment && (
+                                 <VoteScore
+                                    score={comment.voteScore} 
+                                    upVote={() => this.props.upVoteComment(comment.id)} 
+                                    downVote={() => this.props.downVoteComment(comment.id)}
+									      />
+                              )
+                           }
+                        </td>
                         <td>
                            <Link to={`/${category}/${postId}/comments/${comment.id}`}>
                               <Button type="button" outline color="info" size="md">

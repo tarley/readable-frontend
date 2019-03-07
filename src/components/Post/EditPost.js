@@ -51,7 +51,7 @@ class EditPost extends FormPost {
 		this.props.history.push('/');
 	}
 	render() {
-		if(!this.props.selectedItem)
+		if(!this.props.selectedItem.id)
 			return(<NotFound />);
 
 		const {id, author, voteScore, timestamp, category, comments} = this.props.selectedItem;
