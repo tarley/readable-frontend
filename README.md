@@ -6,9 +6,22 @@ Este é o projeto web de conteúdo e comentários para o projeto de avaliação 
 
 Esse repositório inclui somente o código do frontend com os frameworks reactstrap, react-router-dom, react-redux e react-icon.
 
+É necessário executar a aplicação servidora, conforme descrito no item "Comece a desenvolver".
+
 ## Comece a desenvolver
 
-* Para iniciar o desenvolvimento, neste diretório, instale as dependências e inicie o servidor:
+* Primeiro, execute a aplicação servidora [https://github.com/tarley/readable-api-server]:
+	- git clone https://github.com/tarley/readable-api-server.git
+
+* Instale e inicie o servidor conforme README:
+	- npm install
+	- node server
+
+`IMPORTANTE`: 
+O servidor executa na porta 3001, caso deseje alterar essa porta, altere também o apontamento do frontend 
+	- readable-frontend/src/utils/Config.js constante "api".
+
+* Para iniciar o desenvolvimento do frontend, neste diretório, instale as dependências e inicie o servidor:
 	- `npm install`
 	- `npm start`
 
@@ -18,10 +31,10 @@ Esse repositório inclui somente o código do frontend com os frameworks reactst
 	- actions: Eventos do Redux
 	- components: Componentes do React
 		- Comment: Compomentes para o CRUD de comentários.
-		- Common: Componentes comuns para todas as funcionalidades da aplicação.
+		- Common: Componentes comuns para todas as funcionalidades da aplicação. Ex: Componente VoteScore utilizado na listagem de postagens, detalhes da postagem, listagem de comentários, edição de comentários.
 		- Post: Componentes para o CRUD de Posts.
 		- App.js: Layout principal da aplicação, possui as rotas e agrupa todos os demais componentes.
-		- Menu.js: Menu principal da aplicação.
+		- Menu.js: Menu principal da aplicação. Aqui estão as funcionalidades de Filtro de post por categoria e ordenação dos posts.
 	- reducers: Manipuladores de estado do Redux
 	- utils: métodos utilitários, desde auxiliares para as API's de serviços, como Helpers para formatação de data.
 		- Config.js: `IMPORTANTE:` Alterar a constante "api" apontando para o servidor correto. [http://localhost:3001] 
