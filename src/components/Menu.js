@@ -13,9 +13,9 @@ import {connect} from 'react-redux';
 
 import './Menu.css';
 
-import { getAllCategories,
-			sortPostsByVoteScore,
-			sortPostsByCreateDate} from '../actions';
+import  {getAllCategories} from '../actions/Categories';
+import  {sortPostsByVoteScore,
+         sortPostsByCreateDate} from '../actions/Posts';
 
 class Menu extends Component {
    componentDidMount() {

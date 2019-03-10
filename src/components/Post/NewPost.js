@@ -13,7 +13,7 @@ import {connect} from 'react-redux';
 
 import FormPost from './FormPost';
 
-import {createPost} from '../../actions';
+import {createPost} from '../../actions/Posts';
 
 class NewPost extends FormPost {
 	async createPost(e) {

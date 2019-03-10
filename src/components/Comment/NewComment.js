@@ -10,7 +10,7 @@ import {connect} from 'react-redux';
 
 import FormComment from './FormComment';
 
-import {createComment} from '../../actions';
+import {createComment} from '../../actions/Comments';
 
 class NewComment extends FormComment {
 	async createComment(e) {

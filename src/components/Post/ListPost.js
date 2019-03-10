@@ -13,10 +13,10 @@ import {Link} from 'react-router-dom';
 
 import VoteScore from '../Common/VoteScore';
 
-import { getAllPosts,
+import  {getAllPosts,
          getPostsByCategory,
          upVotePost,
-         downVotePost} from '../../actions';
+         downVotePost} from '../../actions/Posts';
 
 import {dateFormat} from '../../utils/Helpers';
 

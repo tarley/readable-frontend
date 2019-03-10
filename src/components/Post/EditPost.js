@@ -20,8 +20,8 @@ import {getPostById,
 		updatePost,
 		deletePost,
 		upVotePost,
-		downVotePost,
-		getAllComments} from '../../actions';
+		downVotePost} from '../../actions/Posts';
+import {getAllComments} from '../../actions/Comments';
 
 import {dateFormat} from '../../utils/Helpers';
 import ListComment from '../Comment/ListComment';

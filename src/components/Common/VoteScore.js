@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
-import { Label,
+import {Label,
 		Badge,
 		Button} from 'reactstrap';
 import {IoIosThumbsDown,

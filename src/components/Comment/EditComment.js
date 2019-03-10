@@ -20,7 +20,7 @@ import {getCommentById,
 		updateComment,
 		deleteComment,
 		upVoteComment,
-		downVoteComment} from '../../actions';
+		downVoteComment} from '../../actions/Comments';
 
 import {dateFormat} from '../../utils/Helpers';
 

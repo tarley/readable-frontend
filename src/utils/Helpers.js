@@ -24,3 +24,6 @@ export const dateFormat = (timestamp) => {
 export function isNullOrEmpty(value) {
 	return !value || value.trim().length === 0;
 }
+
+export const METHOD_SORT_BY_VOTE_SCORE = (a, b) => b.voteScore - a.voteScore;
+export const METHOD_SORT_BY_CREATE_DATE = (a, b) => b.timestamp - a.timestamp;
